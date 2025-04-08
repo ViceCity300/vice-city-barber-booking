@@ -63,13 +63,13 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))'
         },
-        // Vice City custom colors - updated to more masculine palette
+        // Vice City custom colors - updated to a modern palette
         'vice': {
-          teal: '#2B3A42', // Dark teal/navy
-          magenta: '#8B0000', // Dark red
-          navy: '#1F2937', // Dark navy/almost black
-          gold: '#B8860B', // Darker gold
-          light: '#E5E5E5', // Light gray
+          teal: '#1EAEDB', // Bright modern blue
+          magenta: '#ea384c', // Modern red
+          navy: '#1A1F2C', // Dark modern navy
+          gold: '#F97316', // Bright orange
+          light: '#F8FAFC', // Light background
         },
       },
       borderRadius: {
@@ -96,10 +96,10 @@ export default {
         },
         'neon-pulse': {
           '0%, 100%': { 
-            textShadow: '0 0 7px #fff, 0 0 10px #fff, 0 0 21px #2B3A42, 0 0 42px #2B3A42',
+            textShadow: '0 0 7px #fff, 0 0 10px #fff, 0 0 21px #1EAEDB, 0 0 42px #1EAEDB',
           },
           '50%': {
-            textShadow: '0 0 7px #fff, 0 0 10px #fff, 0 0 25px #8B0000, 0 0 45px #8B0000',
+            textShadow: '0 0 7px #fff, 0 0 10px #fff, 0 0 25px #ea384c, 0 0 45px #ea384c',
           },
         }
       },
