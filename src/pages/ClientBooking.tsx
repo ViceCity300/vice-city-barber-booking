@@ -51,7 +51,7 @@ const ClientBooking = () => {
     phone: ""
   });
 
-  const handleBookingConfirm = (date: Date | undefined, time: string, chairId: string) => {
+  const handleBookingConfirm = (date: Date | undefined, startTime: string, endTime: string, chairId: string) => {
     if (!date) return;
     
     // Check if client info is complete

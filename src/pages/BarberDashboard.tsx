@@ -12,7 +12,8 @@ import { toast } from "sonner";
 interface Booking {
   id: string;
   date: string;
-  time: string;
+  startTime: string;
+  endTime: string;
   chairId: string;
   chairName: string;
   status: "upcoming" | "completed";
@@ -38,7 +39,8 @@ const BarberDashboard = () => {
       {
         id: "booking1",
         date: "2025-04-15",
-        time: "10:00",
+        startTime: "10:00",
+        endTime: "11:00",
         chairId: "chair2",
         chairName: "Chaise 2",
         status: "upcoming"
@@ -46,7 +48,8 @@ const BarberDashboard = () => {
       {
         id: "booking2",
         date: "2025-04-10",
-        time: "14:30",
+        startTime: "14:30",
+        endTime: "15:30",
         chairId: "chair1",
         chairName: "Chaise 1",
         status: "completed"
@@ -54,7 +57,8 @@ const BarberDashboard = () => {
       {
         id: "booking3",
         date: "2025-04-20",
-        time: "16:00",
+        startTime: "16:00",
+        endTime: "17:00",
         chairId: "chair3",
         chairName: "Chaise 3",
         status: "upcoming"
@@ -68,7 +72,7 @@ const BarberDashboard = () => {
     navigate("/");
   };
 
-  const handleBookingConfirm = (date: Date | undefined, time: string, chairId: string) => {
+  const handleBookingConfirm = (date: Date | undefined, startTime: string, endTime: string, chairId: string) => {
     if (!date) return;
 
     // Find chair name based on ID (in a real app, you would fetch this from your API)
@@ -83,7 +87,8 @@ const BarberDashboard = () => {
     const newBooking: Booking = {
       id: `booking-${Date.now()}`,
       date: date.toISOString().split('T')[0],
-      time,
+      startTime,
+      endTime,
       chairId,
       chairName: chairMap[chairId] || "Chaise inconnue",
       status: "upcoming"
@@ -127,7 +132,7 @@ const BarberDashboard = () => {
                 <CardHeader>
                   <CardTitle className="text-vice-teal font-display">Réserver une chaise</CardTitle>
                   <CardDescription>
-                    Choisissez une date, une heure et une chaise disponible
+                    Choisissez une date, une plage horaire et une chaise disponible
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -153,12 +158,12 @@ const BarberDashboard = () => {
                 </div>
                 <div className="border rounded-lg p-4">
                   <p className="text-sm text-gray-500">Revenus estimés</p>
-                  <p className="text-3xl font-bold">420 €</p>
+                  <p className="text-3xl font-bold">420 $</p>
                 </div>
                 <div className="border rounded-lg p-4">
                   <p className="text-sm text-gray-500">Frais Vice City</p>
-                  <p className="text-3xl font-bold">52.50 €</p>
-                  <p className="text-xs text-gray-400 mt-1">(7.50 € par coupe)</p>
+                  <p className="text-3xl font-bold">52,50 $</p>
+                  <p className="text-xs text-gray-400 mt-1">(7,50 $ par coupe)</p>
                 </div>
               </CardContent>
             </Card>
@@ -194,7 +199,7 @@ const BarberDashboard = () => {
                               <div>
                                 <p className="font-medium">{booking.chairName}</p>
                                 <p className="text-sm text-gray-500">
-                                  Le {new Date(booking.date).toLocaleDateString('fr-FR')} à {booking.time}
+                                  Le {new Date(booking.date).toLocaleDateString('fr-FR')} de {booking.startTime} à {booking.endTime}
                                 </p>
                               </div>
                               <Button 
@@ -226,7 +231,7 @@ const BarberDashboard = () => {
                               <div>
                                 <p className="font-medium">{booking.chairName}</p>
                                 <p className="text-sm text-gray-500">
-                                  Le {new Date(booking.date).toLocaleDateString('fr-FR')} à {booking.time}
+                                  Le {new Date(booking.date).toLocaleDateString('fr-FR')} de {booking.startTime} à {booking.endTime}
                                 </p>
                               </div>
                               <div className="bg-green-100 text-green-700 rounded-full px-3 py-1 text-xs font-medium">

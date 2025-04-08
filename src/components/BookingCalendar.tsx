@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -11,19 +10,19 @@ import {
 import { Button } from "@/components/ui/button";
 
 interface BookingCalendarProps {
-  onBookingConfirm: (date: Date | undefined, time: string, chairId: string) => void;
+  onBookingConfirm: (date: Date | undefined, startTime: string, endTime: string, chairId: string) => void;
   userType: "barber" | "client";
 }
 
 const BookingCalendar = ({ onBookingConfirm, userType }: BookingCalendarProps) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [time, setTime] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [chairId, setChairId] = useState("");
 
   // Mock data - in a real app, these would come from your API
   const availableTimes = [
-    "9:00", "9:30", "10:00", "10:30", "11:00", "11:30",
-    "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00"
+    "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00"
   ];
 
   const availableChairs = [
@@ -33,9 +32,32 @@ const BookingCalendar = ({ onBookingConfirm, userType }: BookingCalendarProps) =
     { id: "chair4", name: "Chaise 4" }
   ];
 
+  const handleStartTimeChange = (time: string) => {
+    setStartTime(time);
+    
+    // Auto-select end time to be 1 hour after start time
+    const timeIndex = availableTimes.indexOf(time);
+    if (timeIndex < availableTimes.length - 1) {
+      setEndTime(availableTimes[timeIndex + 1]);
+    } else {
+      // If last time slot is selected, keep end time empty
+      setEndTime("");
+    }
+  };
+
+  const handleEndTimeChange = (time: string) => {
+    setEndTime(time);
+  };
+
+  const availableEndTimes = () => {
+    if (!startTime) return [];
+    const startIndex = availableTimes.indexOf(startTime);
+    return startIndex >= 0 ? availableTimes.slice(startIndex + 1) : [];
+  };
+
   const handleConfirm = () => {
-    if (date && time && (userType === "client" || chairId)) {
-      onBookingConfirm(date, time, chairId);
+    if (date && startTime && endTime && (userType === "client" || chairId)) {
+      onBookingConfirm(date, startTime, endTime, chairId);
     }
   };
 
@@ -55,13 +77,27 @@ const BookingCalendar = ({ onBookingConfirm, userType }: BookingCalendarProps) =
       </div>
       <div className="flex flex-col gap-4 flex-grow">
         <div>
-          <label className="block text-sm font-medium mb-1">Heure</label>
-          <Select value={time} onValueChange={setTime}>
+          <label className="block text-sm font-medium mb-1">Heure de début</label>
+          <Select value={startTime} onValueChange={handleStartTimeChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Choisir une heure" />
+              <SelectValue placeholder="Choisir une heure de début" />
             </SelectTrigger>
             <SelectContent className="bg-white">
               {availableTimes.map((t) => (
+                <SelectItem key={t} value={t}>{t}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Heure de fin</label>
+          <Select value={endTime} onValueChange={handleEndTimeChange} disabled={!startTime}>
+            <SelectTrigger>
+              <SelectValue placeholder={!startTime ? "Choisir d'abord une heure de début" : "Choisir une heure de fin"} />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              {availableEndTimes().map((t) => (
                 <SelectItem key={t} value={t}>{t}</SelectItem>
               ))}
             </SelectContent>
@@ -88,7 +124,7 @@ const BookingCalendar = ({ onBookingConfirm, userType }: BookingCalendarProps) =
 
         <Button
           onClick={handleConfirm}
-          disabled={!date || !time || (userType === "barber" && !chairId)}
+          disabled={!date || !startTime || !endTime || (userType === "barber" && !chairId)}
           className={userType === "barber" ? "bg-vice-teal hover:bg-vice-teal/90" : "bg-vice-magenta hover:bg-vice-magenta/90"}
         >
           {userType === "barber" ? "Réserver la chaise" : "Confirmer le rendez-vous"}
