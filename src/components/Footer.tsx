@@ -16,13 +16,13 @@ const Footer = () => {
             <h3 className="text-vice-gold font-display text-xl mb-4">LIENS UTILES</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="hover:text-vice-teal transition-colors">Accueil</Link>
+                <Link to="/" className="hover:text-vice-gold transition-colors">Accueil</Link>
               </li>
               <li>
-                <Link to="/barber/auth" className="hover:text-vice-teal transition-colors">Espace Barbier</Link>
+                <Link to="/barber/auth" className="hover:text-vice-gold transition-colors">Espace Barbier</Link>
               </li>
               <li>
-                <Link to="/client/booking" className="hover:text-vice-teal transition-colors">Réserver un Rendez-vous</Link>
+                <Link to="/client/booking" className="hover:text-vice-gold transition-colors">Réserver un Rendez-vous</Link>
               </li>
             </ul>
           </div>
@@ -37,9 +37,9 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p>&copy; {new Date().getFullYear()} Vice City Barbershop. Tous droits réservés.</p>
           <div className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-vice-teal transition-colors">Facebook</a>
-            <a href="#" className="hover:text-vice-teal transition-colors">Instagram</a>
-            <a href="#" className="hover:text-vice-teal transition-colors">Twitter</a>
+            <a href="#" className="hover:text-vice-gold transition-colors">Facebook</a>
+            <a href="#" className="hover:text-vice-gold transition-colors">Instagram</a>
+            <a href="#" className="hover:text-vice-gold transition-colors">Twitter</a>
           </div>
         </div>
       </div>
